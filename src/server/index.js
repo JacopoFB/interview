@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import products from "./data/products.json" assert { type: "json" };
+import products from "./data/products.json" with { type: "json" };
 
 const app = express();
 

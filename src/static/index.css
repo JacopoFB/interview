@@ -1,0 +1,41 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Mina;
+}
+
+header {
+    background-color: #4eb6ff;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+header h3 {
+    height: 100%;
+    margin-left: 15px;
+}
+header img { padding: 7px 20px; }
+
+main { padding: 10px; }
+
+.searchbar {
+    width: 100%;
+    padding: 6px 3px;
+    margin-bottom: 15px;
+}
+
+#listings {
+    background-color: red;
+}
+
+
+/* custom util classes ---- */
+
+.vertical-flex-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

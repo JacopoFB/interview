@@ -1,6 +1,35 @@
 window.addEventListener("DOMContentLoaded", setup);
 
+/* 
+	Creates DOM elements for each listings and places them in the provided container 
+*/
+function showListings(listings, container) {
+	container.innerHTML = ""; // clear any previously rendered listings
+
+	for (let i = 0; i < listings.length; i++) {
+		// create dom elements
+		const listingContainer = document.createElement('div');
+		const title = document.createElement('p');
+		const price = document.createElement('p');
+		const thumbnail = document.createElement('img');
+		
+		// set and style elements
+		title.innerText = listings[i].title;
+		price.innerText = listings[i].price;
+		thumbnail.src = listings[i].images[0].src;
+
+		// add elements
+		listingContainer.append(thumbnail, title, price);
+		container.appendChild(listingContainer);
+	}
+}
+
 async function setup() {
+	const res = await fetch('/products');
+	const listings = await res.json();
+	
+	showListings(listings, document.getElementById('listings'));
+
 	// START HERE
 	// API Endpoint: GET /products
 	// Returns: Array of product objects with id, title, price (in cents), and array of images
@@ -11,6 +40,8 @@ async function setup() {
 	// BONUS: Use the refactored sorting function for dynamic sort order
 	// BONUS: Add error handling for the fetch request
 }
+
+
 /**
  * Sorts an array of products by price in ascending or descending order.
  *
