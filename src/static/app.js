@@ -30,18 +30,14 @@ function showListings(listings, container) {
 
 async function setup() {
 	const res = await fetch('/products');
-	const listings = await res.json();
+	let listings = await res.json();
+
+	listings = sortProducts(listings, "asc");
 	
 	showListings(listings, document.getElementById('listings'));
 
 	// START HERE
-	// API Endpoint: GET /products
-	// Returns: Array of product objects with id, title, price (in cents), and array of images
-	// TODO: Fetch products from the API
-	// TODO: Render the products to the page in a responsive grid
-	// TODO: Sort the products by price (low to high by default)
 	// TODO: Implement search functionality
-	// BONUS: Use the refactored sorting function for dynamic sort order
 	// BONUS: Add error handling for the fetch request
 }
 
@@ -66,19 +62,22 @@ async function setup() {
  * @param {string} sortOrder - Either "asc" for ascending or "desc" for descending sort order.
  * @returns {Array} - A new array of products sorted by price in the specified order.
  */
-function messyFunction(data1, data2) {
-	let t = [];
-	for (let i = 0; i < data1.length; i++) {
-		t.push(data1[i]);
-	}
-	for (let i = 0; i < t.length; i++) {
-		for (let j = i + 1; j < t.length; j++) {
-			if ((data2 === "asc" && t[i].price > t[j].price) || (data2 === "desc" && t[i].price < t[j].price)) {
-				let tmp = t[i];
-				t[i] = t[j];
-				t[j] = tmp;
-			}
-		}
-	}
-	return t;
+function sortProducts(products, sortOrder) {
+	let results = [];
+
+	products.forEach(element => { results.push(element); }); // shorter way to copy products into new array
+
+	return results.sort((a, b) => {
+		return sortOrder === "desc" ? b.price - a.price : a.price - b.price;
+	});
+
+	/*
+		explanation:
+		Instead of implementing our own sort algorithm, I replaced it with the native JS sort function.
+		I use a ternary operator to check if the user wants descending order, and defaults to ascending
+		otherwise.
+
+		I used the W3 reference for the sort function as I didn't know the syntax offhand: 
+		https://www.w3schools.com/js/js_array_sort.asp
+	*/
 }

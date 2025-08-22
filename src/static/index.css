@@ -31,14 +31,15 @@ header img { padding: 7px 20px; }
     grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
     justify-content: center;
+    width: 85%;
     max-width: 1000px;
     margin: 0 auto;
-    background-color: red;
 }
 .listing { width: 100%; }
 .listing img {
     object-fit: contain;
-    width: 100%
+    width: 100%;
+    aspect-ratio: 1 / 1; /* prevent images from being different heights (staying true to mockup) */
 }
 
 /* custom util classes ---- */
