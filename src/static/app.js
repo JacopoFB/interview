@@ -6,17 +6,21 @@ window.addEventListener("DOMContentLoaded", setup);
 function showListings(listings, container) {
 	container.innerHTML = ""; // clear any previously rendered listings
 
+	const centsToDollars = (cents) => { return cents / 100; }
+
 	for (let i = 0; i < listings.length; i++) {
 		// create dom elements
 		const listingContainer = document.createElement('div');
-		const title = document.createElement('p');
+		const title = document.createElement('h3');
 		const price = document.createElement('p');
 		const thumbnail = document.createElement('img');
 		
 		// set and style elements
 		title.innerText = listings[i].title;
-		price.innerText = listings[i].price;
+		price.innerText = "$" + centsToDollars(listings[i].price);
 		thumbnail.src = listings[i].images[0].src;
+		listingContainer.classList = "listing";
+		price.classList = "listing-price";
 
 		// add elements
 		listingContainer.append(thumbnail, title, price);
