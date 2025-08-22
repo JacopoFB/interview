@@ -42,6 +42,8 @@ header img { padding: 7px 20px; }
     aspect-ratio: 1 / 1; /* prevent images from being different heights (staying true to mockup) */
 }
 
+#error { color: red; }
+
 /* custom util classes ---- */
 
 .vertical-flex-center {

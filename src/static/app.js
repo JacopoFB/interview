@@ -1,10 +1,39 @@
 window.addEventListener("DOMContentLoaded", setup);
 
-/* 
-	Creates DOM elements for each listings and places them in the provided container 
-*/
+async function setup() {
+	document.getElementById('error').innerText = ""; // clear any errors
+
+	try {
+		const res = await fetch('/products');
+		const listings = sortProducts(await res.json(), "asc");
+	
+		showListings(listings, document.getElementById('listings'));
+
+		// Add searchbar functionality
+		const searchListings = (listings, keyword) => {
+			return listings.filter((listing) => listing.title.toLowerCase().includes(keyword.toLowerCase()));
+		}
+		document.getElementById('searchbar').addEventListener('input', (event) => {
+			let filteredListings = searchListings(listings, event.target.value);
+			filteredListings = sortProducts(filteredListings, "asc"); // sort filtered listings
+			showListings(filteredListings, document.getElementById('listings'));
+		});
+	} catch (err) {
+		console.log("Something went wrong getting listings: " + err);
+		document.getElementById('error').innerText = "Something went wrong fetching listings!"
+	}
+}
+
+/* MY CUSTOM HELPER FUNCTIONS ----- */
+
+/* Creates DOM elements for each listings and places them in the provided container */
 function showListings(listings, container) {
 	container.innerHTML = ""; // clear any previously rendered listings
+	
+	if (listings.length == 0) { 
+		container.innerText = "No Listings Found"; 
+		return;
+	}
 
 	const centsToDollars = (cents) => { return cents / 100; }
 
@@ -27,20 +56,6 @@ function showListings(listings, container) {
 		container.appendChild(listingContainer);
 	}
 }
-
-async function setup() {
-	const res = await fetch('/products');
-	let listings = await res.json();
-
-	listings = sortProducts(listings, "asc");
-	
-	showListings(listings, document.getElementById('listings'));
-
-	// START HERE
-	// TODO: Implement search functionality
-	// BONUS: Add error handling for the fetch request
-}
-
 
 /**
  * Sorts an array of products by price in ascending or descending order.
